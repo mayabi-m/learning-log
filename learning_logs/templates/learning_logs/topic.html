@@ -1,0 +1,19 @@
+{% extends 'learning_logs/base.html' %}
+
+{% block content %}
+<h1>{{ topic.text }}</h1>
+<p>Entries:</p>
+
+<ul>
+    {% for entry in entries %}
+    <li>
+        <p>{{ entry.date_added|date:'M d, Y H:i' }}</p>
+        <p>{{ entry.text }}</p>
+    </li>
+    {% empty %}
+    <p>No entries for this topic yet.</p>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'learning_logs:new_entry' topic.id %}" class="btn btn-primary">Add Entry</a>
+{% endblock %}
