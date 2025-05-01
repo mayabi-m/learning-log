@@ -1,5 +1,5 @@
 
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -44,6 +44,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'learning_log.urls'
 
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -61,6 +62,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'learning_log.wsgi.application'
 
+TEMPLATES_DIRS = BASE_DIR / 'templates'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases

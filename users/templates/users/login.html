@@ -5,8 +5,20 @@
 {% endif %}
 <form action="{% url 'users:login' %}" method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
-    <input type="hidden" name="next" value="{{ next }}">
+    <div>
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" required autofocus>
+    </div><br>
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" required>
+    </div><br>
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" required>
+    </div>
+    <div>
+        <button type="submit">Log in</button>
+    </div>
 </form>
 {% endblock%}
