@@ -1,19 +1,46 @@
 {% extends 'base.html'%}
 {% block content%}
-<div class="max-w-3xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-md">
-    <h1 class="text-3xl font-bold mb-6 text-gray-800">Topics</h1>
-    <ul class="space-y-3">
-      {% for topic in topics %}
-        <li>
-          <a href="{% url 'learning_logs:topic' topic.id %}"
-             class="block px-4 py-2 bg-gray-100 rounded-lg hover:bg-blue-100 text-blue-700 font-medium transition-colors duration-200">
-            {{ topic }}
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h2 class="h4 mb-0">Your Learning Topics</h2>
+        </div>
+        
+        <div class="card-body p-0">
+          <ul class="list-group list-group-flush">
+            {% for topic in topics %}
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <a href="{% url 'learning_logs:topic' topic.id %}" class="text-decoration-none text-dark">
+                  {{ topic }}
+                </a>
+                <span class="badge bg-primary rounded-pill">
+                  {{ topic.entry_set.count }}
+                </span>
+              </li>
+            {% empty %}
+              <li class="list-group-item text-center fst-italic text-muted py-4">
+                No topics have been added yet.
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+        
+        <div class="card-footer bg-white">
+          <a href="{% url 'learning_logs:new_topic' %}" class="btn btn-primary">
+            <i class="bi bi-plus-circle me-1"></i> Add new topic
           </a>
-        </li>
-      {% empty %}
-        <li class="text-gray-500 italic">No topics have been added yet.</li>
-      {% endfor %}
-    </ul>
+        </div>
+      </div>
+      
+      {% if topics %}
+      <div class="mt-3 text-center text-muted">
+        <small>Click on a topic to see its entries</small>
+      </div>
+      {% endif %}
+    </div>
   </div>
+</div>
 {% endblock%}
 

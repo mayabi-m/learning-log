@@ -1,19 +1,71 @@
 {% extends 'base.html'%}
-{% block content%}
-<div class="max-w-xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-xl">
-    <h1 class="text-2xl font-bold mb-4 text-gray-800">New Topic</h1>
-    <p class="mb-6 text-gray-600">Enter a new topic below:</p>
-  
-    <form action="{% url 'learning_logs:new_topic' %}" method="post" class="space-y-4">
-      {% csrf_token %}
-      <div class="space-y-2">
-        {{ form.as_p }}
-      </div>
-  
-      <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition duration-300">
-        Submit
-      </button>
-    </form>
-  </div>
+
+
+{% block content %}
+{% block header %}
+<h2 class="page-header">Add a new topic:</h2>
+{% endblock header %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Create New Topic</h4>
+            </div>
+            <div class="card-body p-4">
+                <form action="{% url 'learning_logs:new_topic' %}" method="post" class="form">
+                    {% csrf_token %}
+                    
+                    {% if 'django_bootstrap5' in INSTALLED_APPS %}
+                        {% load django_bootstrap5 %}
+                        {% bootstrap_form form %}
+                        
+                        <div class="d-grid gap-2 mt-4">
+                            <button name="submit" type="submit" class="btn btn-primary">
+                                <i class="bi bi-plus-circle me-2"></i>Add Topic
+                            </button>
+                        </div>
+                    {% else %}
+                        <!-- Fallback if django_bootstrap5 is not available -->
+                        {% for field in form %}
+                        <div class="mb-3">
+                            <label for="{{ field.id_for_label }}" class="form-label">
+                                {{ field.label }}{% if field.field.required %}<span class="text-danger">*</span>{% endif %}:
+                            </label>
+                            
+                            <div class="{% if field.errors %}has-error{% endif %}">
+                                {{ field }}
+                                
+                                {% if field.errors %}
+                                <div class="text-danger mt-1">
+                                    {% for error in field.errors %}
+                                        <small>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                                
+                                {% if field.help_text %}
+                                <small class="text-muted">{{ field.help_text }}</small>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                        
+                        <div class="d-grid gap-2 mt-4">
+                            <button name="submit" type="submit" class="btn btn-primary">
+                                <i class="bi bi-plus-circle me-2"></i>Add Topic
+                            </button>
+                        </div>
+                    {% endif %}
+                </form>
+            </div>
+            <div class="card-footer text-center py-3">
+                <a href="{% url 'learning_logs:topics' %}" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left me-2"></i>Back to Topics
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
   
 {% endblock%}
