@@ -1,15 +1,19 @@
 {% extends 'base.html'%}
 {% block content%}
-<h1>Topics</h1>
-<ul>
-    {% for topic in topics %}
+<div class="max-w-3xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-md">
+    <h1 class="text-3xl font-bold mb-6 text-gray-800">Topics</h1>
+    <ul class="space-y-3">
+      {% for topic in topics %}
         <li>
-            <a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a>
+          <a href="{% url 'learning_logs:topic' topic.id %}"
+             class="block px-4 py-2 bg-gray-100 rounded-lg hover:bg-blue-100 text-blue-700 font-medium transition-colors duration-200">
+            {{ topic }}
+          </a>
         </li>
-    {% empty %}
-        <li>No topics available.</li>
-    {% endfor %}
-</ul>
-<p><a href="{% url 'learning_logs:new_topic' %}">Add a new topic</a></p>
+      {% empty %}
+        <li class="text-gray-500 italic">No topics have been added yet.</li>
+      {% endfor %}
+    </ul>
+  </div>
 {% endblock%}
 
