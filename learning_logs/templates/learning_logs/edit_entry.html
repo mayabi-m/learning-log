@@ -1,11 +1,84 @@
 {% extends 'base.html'%}
 {% block content%}
-<p>Editing entry for {{ entry.topic }}</p>
-<p>Enter your updated entry:</p>
-<form action="{% url 'learning_logs:edit_entry' entry.id %}" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Update Entry</button>
-</form>
+{% extends 'base.html'%}
+{% block content%}
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h1 class="h3 mb-0">Edit Entry</h1>
+        </div>
+        
+        <div class="card-body p-4">
+          <p class="text-muted mb-4">Enter your updated entry for "{{ entry.topic }}":</p>
+          
+          <form action="{% url 'learning_logs:edit_entry' entry.id %}" method="post">
+            {% csrf_token %}
+            
+            {% if 'django_bootstrap5' in INSTALLED_APPS %}
+              {% load django_bootstrap5 %}
+              {% bootstrap_form form %}
+              
+              <div class="d-grid gap-2 mt-4">
+                <button type="submit" class="btn btn-primary">
+                  <i class="bi bi-check-circle me-2"></i>Update Entry
+                </button>
+              </div>
+            {% else %}
+              <!-- Fallback if django_bootstrap5 is not available -->
+              <div class="mb-3">
+                {{ form.as_p }}
+              </div>
+              
+              <style>
+                /* Style all input and textarea elements */
+                form input, form select, form textarea {
+                    display: block;
+                    width: 100%;
+                    padding: 0.375rem 0.75rem;
+                    font-size: 1rem;
+                    font-weight: 400;
+                    line-height: 1.5;
+                    color: #212529;
+                    background-color: #fff;
+                    background-clip: padding-box;
+                    border: 1px solid #ced4da;
+                    border-radius: 0.25rem;
+                    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+                }
+                
+                /* Add focus styling */
+                form input:focus, form select:focus, form textarea:focus {
+                    border-color: #86b7fe;
+                    outline: 0;
+                    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+                }
+                
+                /* Textarea specific sizing */
+                form textarea {
+                    min-height: 150px;
+                }
+              </style>
+              
+              <div class="d-grid gap-2 mt-4">
+                <button type="submit" class="btn btn-primary">
+                  <i class="bi bi-check-circle me-2"></i>Update Entry
+                </button>
+              </div>
+            {% endif %}
+          </form>
+        </div>
+        
+        <div class="card-footer bg-white">
+          <a href="{% url 'learning_logs:topic' entry.topic.id %}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left me-2"></i>Back to Topic
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock%}
 
 {% endblock%}
